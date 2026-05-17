@@ -1,61 +1,79 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>第5回 CS杯 ～FINAL～</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
 body{
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-  background:#000;
-  position:relative;
+  margin:0;
+  background:#050505;
+  color:white;
   font-family:sans-serif;
-}
-
-.bg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.15);
-}
-
-.button-area{
-  position:absolute;
-  bottom:14%;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
   display:flex;
-  justify-content:space-between;
-  gap:14px;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
 }
 
-.btn{
+.container{
+  width:100%;
+  max-width:430px;
+  padding:20px;
+  text-align:center;
+}
+
+.title{
+  font-size:42px;
+  font-weight:bold;
+  line-height:1.2;
+  margin-bottom:20px;
+}
+
+.gold{
+  color:#d4a437;
+}
+
+.player{
+  font-size:24px;
+  margin-bottom:40px;
+}
+
+.card{
+  border:1px solid #d4a437;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:30px;
+  background:#111;
+}
+
+.info{
+  font-size:22px;
+  margin-bottom:14px;
+}
+
+.sub{
+  color:#aaa;
+  line-height:1.7;
+}
+
+.buttons{
+  display:flex;
+  gap:14px;
+  margin-top:30px;
+}
+
+button{
   flex:1;
-  padding:18px 10px;
+  padding:18px;
   border:none;
   border-radius:14px;
   font-size:20px;
   font-weight:bold;
   cursor:pointer;
-  transition:0.2s;
 }
 
 .join{
@@ -67,35 +85,56 @@ body{
   background:#444;
   color:#fff;
 }
-
-.btn:active{
-  transform:scale(0.96);
-}
 </style>
 </head>
 
 <body>
 
-<img
-  class="bg"
-  src="EB4DB536-B1D4-49A7-9AC1-D40643F26685.png"
->
+<div class="container">
 
-<div class="overlay"></div>
+<div class="title">
+第5回<br>
+<span class="gold">CS杯 ～FINAL～</span>
+</div>
 
-<div class="button-area">
-  <button class="btn join" onclick="join()">
-    参戦する
-  </button>
+<div class="player" id="playerName">
+招待プレイヤー
+</div>
 
-  <button class="btn decline" onclick="decline()">
-    辞退する
-  </button>
+<div class="card">
+<div class="info">
+2026.6.8 MON
+</div>
+
+<div class="info">
+ラディアーレ三ノ宮
+</div>
+
+<div class="sub">
+なお、本大会は招待者限定です。<br>
+貴殿の参戦を確認次第、<br>
+トーナメント表へ登録されます。
+</div>
+</div>
+
+<div class="buttons">
+<button class="join" onclick="join()">
+参戦する
+</button>
+
+<button class="decline" onclick="decline()">
+辞退する
+</button>
+</div>
+
 </div>
 
 <script>
 const params = new URLSearchParams(location.search);
-const player = params.get("player") || "参加者";
+const player = params.get("player") || "招待プレイヤー";
+
+document.getElementById("playerName").innerText =
+player + " 殿";
 
 function join(){
   alert(player + " さんが参戦しました！");
