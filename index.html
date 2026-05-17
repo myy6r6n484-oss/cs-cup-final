@@ -3,225 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>第5回 CS杯 ～FINAL～</title>
 
 <style>
-{
-margin:0;
-padding:0;
-box-sizing:border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-font-family:sans-serif;
-background:#000;
-overflow:hidden;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+  position:relative;
+  font-family:sans-serif;
 }
 
-/ 背景画像 /
-.bg-image{
-position:fixed;
-inset:0;
-background-image:url("invite-bg.png");
-background-size:cover;
-background-position:center;
-filter:brightness(0.45);
-transform:scale(1.05);
+.bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/ 黒オーバーレイ /
 .overlay{
-position:fixed;
-inset:0;
-background:linear-gradient(
-to bottom,
-rgba(0,0,0,0.3),
-rgba(0,0,0,0.75)
-);
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.15);
 }
 
-/ メインUI */
-.container{
-position:relative;
-z-index:5;
-width:90%;
-max-width:430px;
-padding:24px;
-border:1px solid rgba(255,215,0,0.5);
-background:rgba(0,0,0,0.55);
-backdrop-filter:blur(6px);
-box-shadow:0 0 30px rgba(255,215,0,0.15);
-text-align:center;
+.button-area{
+  position:absolute;
+  bottom:14%;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
 }
 
-.top{
-color:#ffcc00;
-letter-spacing:4px;
-font-size:12px;
-margin-bottom:18px;
-}
-
-.player{
-font-size:42px;
-font-weight:900;
-color:white;
-margin-bottom:6px;
-text-shadow:0 0 18px rgba(255,255,255,0.35);
-}
-
-.entry{
-font-size:54px;
-font-weight:900;
-color:#ffcc00;
-margin-bottom:20px;
-}
-
-.title{
-font-size:24px;
-font-weight:700;
-margin-bottom:28px;
-color:white;
-}
-
-.button{
-display:block;
-width:100%;
-padding:18px;
-margin-top:16px;
-font-size:20px;
-font-weight:900;
-border:none;
-cursor:pointer;
-transition:0.2s;
+.btn{
+  flex:1;
+  padding:18px 10px;
+  border:none;
+  border-radius:14px;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
 }
 
 .join{
-background:#c9a800;
-color:black;
+  background:#d4a437;
+  color:#000;
 }
 
 .decline{
-background:#2d2d2d;
-color:white;
+  background:#444;
+  color:#fff;
 }
 
-.button:active{
-transform:scale(0.98);
-}
-
-.note{
-margin-top:26px;
-font-size:12px;
-color:#aaa;
-letter-spacing:2px;
-}
-
-.flash{
-position:fixed;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:20;
-}
-
-.show{
-animation:flash 0.45s;
-}
-
-@keyframes flash{
-0%{opacity:0;}
-50%{opacity:0.9;}
-100%{opacity:0;}
+.btn:active{
+  transform:scale(0.96);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-image"></div>
+<img
+  class="bg"
+  src="EB4DB536-B1D4-49A7-9AC1-D40643F26685.png"
+>
+
 <div class="overlay"></div>
-<div class="flash" id="flash"></div>
 
-<div class="container">
+<div class="button-area">
+  <button class="btn join" onclick="join()">
+    参戦する
+  </button>
 
-<div class="top">
-INVITATION SYSTEM
-</div>
-
-<div class="player" id="playerName">
-PLAYER
-</div>
-
-<div class="entry">
-参戦！！
-</div>
-
-<div class="title">
-第5回 CS杯 ～FINAL～
-</div>
-
-<button class="button join" onclick="joinBattle()">
-▶ 参戦する
-</button>
-
-<button class="button decline" onclick="declineBattle()">
-▶ 今回は辞退する
-</button>
-
-<div class="note">
-AUTHORIZED PLAYERS ONLY
-</div>
-
+  <button class="btn decline" onclick="decline()">
+    辞退する
+  </button>
 </div>
 
 <script>
+const params = new URLSearchParams(location.search);
+const player = params.get("player") || "参加者";
 
-const params = new URLSearchParams(window.location.search);
-const player = params.get("player") || "PLAYER";
-
-document.getElementById("playerName").innerText = player;
-
-const formBase =
-"https://docs.google.com/forms/d/e/1FAIpQLSeRmUcS0EGjsAmZCAe5naIAePwXdt1pvchyNNbDdRQTaXX2QQ/viewform?usp=pp_url&entry.2102584332=";
-
-function flash(){
-document.getElementById("flash").classList.add("show");
-
-setTimeout(()=>{
-document.getElementById("flash").classList.remove("show");
-},450);
+function join(){
+  alert(player + " さんが参戦しました！");
 }
 
-function joinBattle(){
-
-flash();
-
-setTimeout(()=>{
-
-alert(player + "、参戦！！\n\nENTRY ACCEPTED");
-
-window.location.href =
-formBase + encodeURIComponent(player);
-
-},450);
-
+function decline(){
+  alert(player + " さんが辞退しました！");
 }
-
-function declineBattle(){
-
-alert("UNDERSTOOD.\n\nまた次回の参戦を待っています。");
-
-window.location.href =
-formBase + encodeURIComponent(player);
-
-}
-
 </script>
 
 </body>
