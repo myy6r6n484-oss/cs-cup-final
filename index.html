@@ -6,35 +6,56 @@
 <title>第5回 CS杯 ～FINAL～</title>
 
 <style>
-body{
+{
 margin:0;
-background:#050505;
-color:white;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
 font-family:sans-serif;
+background:#000;
+overflow:hidden;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-min-height:100vh;
-overflow:hidden;
+position:relative;
 }
 
-.bg{
+/ 背景画像 /
+.bg-image{
 position:fixed;
 inset:0;
-background:
-radial-gradient(circle at top,#3a2a00 0%,#050505 60%);
-opacity:0.9;
+background-image:url("invite-bg.png");
+background-size:cover;
+background-position:center;
+filter:brightness(0.45);
+transform:scale(1.05);
 }
 
+/ 黒オーバーレイ /
+.overlay{
+position:fixed;
+inset:0;
+background:linear-gradient(
+to bottom,
+rgba(0,0,0,0.3),
+rgba(0,0,0,0.75)
+);
+}
+
+/ メインUI */
 .container{
 position:relative;
-z-index:2;
+z-index:5;
 width:90%;
-max-width:420px;
-border:1px solid #c9a800;
-padding:32px 24px;
-background:rgba(0,0,0,0.85);
-box-shadow:0 0 40px rgba(201,168,0,0.2);
+max-width:430px;
+padding:24px;
+border:1px solid rgba(255,215,0,0.5);
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(6px);
+box-shadow:0 0 30px rgba(255,215,0,0.15);
 text-align:center;
 }
 
@@ -48,22 +69,23 @@ margin-bottom:18px;
 .player{
 font-size:42px;
 font-weight:900;
-margin-bottom:10px;
-color:#fff;
-text-shadow:0 0 20px rgba(255,255,255,0.3);
+color:white;
+margin-bottom:6px;
+text-shadow:0 0 18px rgba(255,255,255,0.35);
 }
 
 .entry{
-font-size:52px;
+font-size:54px;
 font-weight:900;
 color:#ffcc00;
-margin-bottom:28px;
+margin-bottom:20px;
 }
 
 .title{
 font-size:24px;
-margin-bottom:30px;
 font-weight:700;
+margin-bottom:28px;
+color:white;
 }
 
 .button{
@@ -84,14 +106,19 @@ color:black;
 }
 
 .decline{
-background:#333;
+background:#2d2d2d;
 color:white;
 }
 
+.button:active{
+transform:scale(0.98);
+}
+
 .note{
-margin-top:28px;
-font-size:13px;
-color:#999;
+margin-top:26px;
+font-size:12px;
+color:#aaa;
+letter-spacing:2px;
 }
 
 .flash{
@@ -100,15 +127,16 @@ inset:0;
 background:white;
 opacity:0;
 pointer-events:none;
+z-index:20;
 }
 
 .show{
-animation:flash 0.5s;
+animation:flash 0.45s;
 }
 
 @keyframes flash{
 0%{opacity:0;}
-50%{opacity:0.8;}
+50%{opacity:0.9;}
 100%{opacity:0;}
 }
 </style>
@@ -116,7 +144,8 @@ animation:flash 0.5s;
 
 <body>
 
-<div class="bg"></div>
+<div class="bg-image"></div>
+<div class="overlay"></div>
 <div class="flash" id="flash"></div>
 
 <div class="container">
@@ -166,7 +195,7 @@ document.getElementById("flash").classList.add("show");
 
 setTimeout(()=>{
 document.getElementById("flash").classList.remove("show");
-},500);
+},450);
 }
 
 function joinBattle(){
@@ -180,7 +209,7 @@ alert(player + "、参戦！！\n\nENTRY ACCEPTED");
 window.location.href =
 formBase + encodeURIComponent(player);
 
-},500);
+},450);
 
 }
 
